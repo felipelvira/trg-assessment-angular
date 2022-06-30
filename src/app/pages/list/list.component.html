@@ -1,0 +1,123 @@
+<div class="col list-container">
+    <p-card header="List of locations" class="">
+        <p-toolbar styleClass="mb-4">
+            <ng-template pTemplate="left">
+                <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+            </ng-template>
+
+            <!-- <ng-template pTemplate="right">
+                <p-fileUpload mode="basic" accept=".json" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+            </ng-template> -->
+        </p-toolbar>
+
+        <!-- TABLE BODY -->
+
+        <p-table #dt [value]="locations" [rows]="10" [paginator]="true" [globalFilterFields]="['title','position.lat','position.lng','description']" responsiveLayout="scroll" [(selection)]="selectedLocations" [rowHover]="true" dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
+            <ng-template pTemplate="caption">
+                <div class="flex align-items-center justify-content-between">
+                    <h5 class="m-0">Manage Locations</h5>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text"
+                        (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+                        placeholder="Search..." />
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="title">Title
+                        <p-sortIcon field="title"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="description">Description
+                        <p-sortIcon field="description"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="position.lat">Latitude
+                        <p-sortIcon field="position.lat"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="position.lng">Longitude
+                        <p-sortIcon field="position.lng"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="edit">Edit
+                        <p-sortIcon field="edit"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-location>
+                <tr>
+                    <td>{{location.title}}</td>
+                    <td>{{location.description}}</td>
+                    <td>{{location.position.lat}}</td>
+                    <td>{{location.position.lng}}</td>
+                    <td>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editLocation(location)"></button>
+                        <!-- <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button> -->
+                        <!-- (click)="deleteProduct(product)"></button> -->
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                <div class="flex align-items-center justify-content-between">
+                    In total there are {{locations ? locations.length : 0 }} locations.
+                </div>
+            </ng-template>
+        </p-table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </p-card>
+</div>
+
+
+
+
+<!-- EDIT LOCATION:  Dialog -->
+
+<p-dialog [(visible)]="locationDialog" [style]="{width: '450px'}" header="Location Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+        <div class="field">
+            <label for="title">Title</label>
+            <input type="text" pInputText id="title" [(ngModel)]="location.title" required autofocus />
+            <small class="p-error" *ngIf="submitted && !location.title">Name is required.</small>
+        </div>
+        <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" pInputTextarea [(ngModel)]="location.description" required rows="3" cols="20"></textarea>
+        </div>
+
+        <div class="formgrid grid">
+            <div class="field col">
+                <label for="latitude">Latitude</label>
+                <p-inputNumber id="latitude" [ngModel]="location.position?.lat" (ngModelChange)="location.position=$event"></p-inputNumber>
+            </div>
+            <div class="field col">
+                <label for="longitude">Longitude</label>
+                <p-inputNumber id="longitude" [ngModel]="location.position?.lng" (ngModelChange)="location.position=$event"></p-inputNumber>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveLocation(location)"></button>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,23 @@
+.map-container {
+    margin-top: 1%;
+     ::ng-deep .card-map {
+        .p-card-body {
+            padding: 1em;
+            .p-card-content {
+                padding: 0;
+                height: 400px;
+                .zoom-btns {
+                    position: relative;
+                    top: -5em;
+                    width: 10%;
+                    margin-left: auto;
+                    justify-content: space-around;
+                    display: flex;
+                }
+            }
+        }
+    }
+     ::ng-deep .info-card {
+        height: 100%;
+    }
+}

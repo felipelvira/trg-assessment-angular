@@ -1,0 +1,30 @@
+<div class="grid map-container">
+    <p-card header="{{selectedLocation.title}}" styleClass="info-card" class="col-fixed col-2" *ngIf="openLeftPanel">
+
+        <div class="grid">
+            <p class="col"><strong>Latitude</strong></p>
+            <p class="col"> {{selectedLocation.position.lat}} </p>
+        </div>
+        <div class="grid">
+            <p class="col"><strong>Longitude</strong></p>
+            <p class="col"> {{selectedLocation.position.lng}} </p>
+        </div>
+    </p-card>
+    <p-card class="map col" styleClass="card-map">
+        <google-map height="400px" width="100%" style="gmap" [zoom]="zoom" [center]="center" [options]="options">
+            <map-marker #somemarker="mapMarker" *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label" [title]="marker.title" [options]="marker.options" (mapClick)="openInfo(somemarker, marker.info, marker)">
+            </map-marker>
+
+            <map-info-window>{{ infoContent }}</map-info-window>
+        </google-map>
+
+        <div class="zoom-btns">
+            <button pButton pRipple type="button" icon="pi pi-minus" class="p-button-rounded" (click)="zoomOut()"></button>
+            <button pButton pRipple type="button" icon="pi pi-plus" class="p-button-rounded" (click)="zoomIn()"></button>
+        </div>
+
+    </p-card>
+    <ngx-spinner bdColor="rgba(51,51,51,0.8)" size="medium" color="#fff" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: white">Loading...</p>
+    </ngx-spinner>
+</div>
