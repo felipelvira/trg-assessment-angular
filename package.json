@@ -1,6 +1,10 @@
 {
     "name": "trg-assessment",
     "version": "0.0.0",
+    "engines": {
+        "node": "16.15.0",
+        "npm": "8.5.5"
+    },
     "scripts": {
         "ng": "ng",
         "start": "node server.js",
@@ -8,10 +12,6 @@
         "watch": "ng build --watch --configuration development",
         "test": "ng test",
         "heroku-postbuild": "ng build —-prod"
-    },
-    "engines": {
-        "node": "8.5.5",
-        "npm": "16.15.0"
     },
     "private": true,
     "dependencies": {
